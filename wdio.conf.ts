@@ -11,7 +11,7 @@ export const config: WebdriverIO.Config = {
     {
       platformName: "mac",
       "appium:automationName": "mac2",
-      "appium:bundleId": "com.apple.calculator",
+      "appium:bundleId": "com.apple.iBooksX",
     },
   ],
   maxInstances: 1,
@@ -20,7 +20,17 @@ export const config: WebdriverIO.Config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
-  services: ["appium"],
+  services: [
+    [
+      "appium",
+      {
+        logPath: "./",
+        args: {
+          logLevel: "debug",
+        },
+      },
+    ],
+  ],
   framework: "mocha",
   reporters: ["spec"],
   mochaOpts: {
