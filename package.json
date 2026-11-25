@@ -1,6 +1,15 @@
 {
-  "name": "wbdio-appium",
+  "name": "wdio-books-mac",
+  "private": true,
   "type": "module",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.ts",
+    "test:smoke": "wdio run ./wdio.conf.ts --mochaOpts.grep @smoke",
+    "test:regression": "wdio run ./wdio.conf.ts --mochaOpts.grep @regression",
+    "inspect": "wdio run ./wdio.conf.ts --spec ./tools/inspect.spec.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "tc:report": "tsx tools/tc-report.ts"
+  },
   "devDependencies": {
     "@types/node": "^25.2.2",
     "@wdio/appium-service": "^9.33.1",
@@ -10,9 +19,8 @@
     "@wdio/mocha-framework": "^9.33.1",
     "@wdio/spec-reporter": "^9.33.1",
     "appium-mac2-driver": "^3.2.15",
-    "expect-webdriverio": "^7.0.1"
-  },
-  "scripts": {
-    "wdio": "wdio run ./wdio.conf.ts"
+    "expect-webdriverio": "^7.0.1",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
   }
 }

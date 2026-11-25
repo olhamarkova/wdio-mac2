@@ -3,7 +3,7 @@ export const config: WebdriverIO.Config = {
   tsConfigPath: "./tsconfig.json",
 
   port: 4724,
-  specs: ["./test/specs/**/*.ts"],
+  specs: ["./test/e2e/**/*.ts"],
   exclude: [
     // 'path/to/excluded/files'
   ],
