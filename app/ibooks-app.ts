@@ -1,12 +1,13 @@
 import { IBooksLocators } from "./ibooks-locators.ts";
-import { expect, $ } from "@wdio/globals";
-import type { ChainablePromiseElement, Selector } from "webdriverio";
+import { BaseScreen } from "./base-screen.ts";
+import { expect } from "@wdio/globals";
+import type { ChainablePromiseElement } from "webdriverio";
 
-export class IBooks {
-  locators = new IBooksLocators();
+export class IBooks extends BaseScreen {
+  readonly locators = new IBooksLocators();
 
-  private getElement(locator: Selector): ChainablePromiseElement {
-    return $(locator);
+  constructor() {
+    super();
   }
 
   private searchButton(): ChainablePromiseElement {
