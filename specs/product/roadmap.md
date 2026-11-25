@@ -15,8 +15,8 @@ CI execution is out of scope (see [mission](mission.md)).
 
 ## Phase 1 — Navigation smoke
 
-- [ ] Refactor: extract the sidebar into `app/components/nav-bar.ts` + `nav-bar-locators.ts`, expose it from `BaseScreen` (`this.navBar`)
-- [ ] Refactor: rename `app/ibooks-app.ts` into screen-level POMs (e.g. `SearchScreen`) as screens are added
+- [x] Refactor: extract the sidebar into `app/components/nav-bar.ts` + `nav-bar-locators.ts`, expose it from `BaseScreen` (`this.navBar`)
+- [x] Refactor: split `app/ibooks-app.ts` into screen-level POMs (`app/screens/`, first: `SearchScreen`); add new screens there
 - [ ] Map the real sidebar items with `npm run inspect` and record them in test cases
 - [ ] Smoke cases (`@smoke @navigation`): each sidebar item opens its screen —
       Home, Book Store, Audiobook Store, Search, Library sections

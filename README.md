@@ -33,7 +33,7 @@ npm ci
 ```
 
 Appium and the Mac2 driver are installed locally as part of `npm ci`; the
-Appium server is started automatically by `@wdio/appium-service` on port 4724.
+Appium server is started automatically by `@wdio/appium-service` on port 4723.
 The first run takes longer because Xcode builds WebDriverAgentMac.
 
 ## Running tests
@@ -64,7 +64,7 @@ Don't use the mouse or keyboard while tests run — they drive the real app.
 ## Project structure
 
 ```
-app/              Page Objects (screens, *-locators.ts, base-screen.ts)
+app/              Page Objects (base classes, screens/, components/, *-locators.ts)
 test/e2e/         Mocha specs, one file per area
 tools/            dev utilities (page-source dump)
 specs/product/    mission, tech stack, roadmap
@@ -93,8 +93,12 @@ and tags (`@smoke`/`@regression`, `@<area>`). Details:
 - **`Could not find a driver for automationName 'mac2'`** — run
   `npx appium driver list --installed`; if mac2 is missing, reinstall with
   `npm ci`.
+- **`Mac2Driver host process has exited with code 1`** — Xcode is missing or
+  not selected (`xcode-select -p` must not be `/Library/Developer/CommandLineTools`).
+- **`require() of ES Module … not supported`** when Appium starts — Node is
+  too old; run `nvm use`.
 - **Session fails to start / xcodebuild errors** — check `xcode-select -p`
   points to Xcode.app (not CommandLineTools) and Accessibility permissions are
   granted.
-- **Port 4724 in use** — a previous Appium process is still running:
-  `lsof -i :4724` and stop it.
+- **Port 4723 in use** — a previous Appium process is still running:
+  `lsof -i :4723` and stop it.
