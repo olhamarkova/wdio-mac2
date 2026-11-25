@@ -7,7 +7,7 @@
 | Test runner      | WebdriverIO (`@wdio/cli`, local runner)  | 9.33                |
 | Test framework   | Mocha (BDD) via `@wdio/mocha-framework`  | —                   |
 | Assertions       | `expect-webdriverio`                     | 7.x                 |
-| Automation server| Appium, started by `@wdio/appium-service` on port 4724 | 3.9 |
+| Automation server| Appium, started by `@wdio/appium-service` on port 4723 | 3.9 |
 | Driver           | `appium-mac2-driver` (XCTest / WebDriverAgentMac) | 3.5        |
 | Reporter         | `@wdio/spec-reporter`                    | —                   |
 | App under test   | Apple Books, bundle id `com.apple.iBooksX` | ships with macOS  |
@@ -33,11 +33,15 @@
 ## Code layout
 
 ```
-app/                      Page Object Model
-  base-screen.ts          BaseScreen — common element helpers, shared components
-  <screen>.ts             screen classes (extend BaseScreen)
-  <screen>-locators.ts    locator classes, one per screen/component
-  components/             (planned) shared UI components, e.g. NavBar
+app/                          Page Object Model
+  base-component.ts           BaseComponent — getElement() adds the //XCUIElementType prefix
+  base-screen.ts              BaseScreen — extends BaseComponent, exposes shared components (navBar)
+  components/                 shared UI components (extend BaseComponent)
+    nav-bar.ts                NavBar — sidebar navigation
+    nav-bar-locators.ts       NavBarLocators — one locator per sidebar item
+  screens/                    one class per screen (extend BaseScreen)
+    search-screen.ts          SearchScreen
+    search-screen-locators.ts SearchScreenLocators
 test/e2e/                 Mocha specs, one file per area (navigation.spec.ts, search.spec.ts…)
 tools/                    dev utilities (page-source dump for locator discovery)
 specs/                    product docs and test-case specifications

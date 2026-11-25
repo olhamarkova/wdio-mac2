@@ -1,8 +1,10 @@
-import { $ } from "@wdio/globals";
-import type { ChainablePromiseElement, Selector } from "webdriverio";
+import { BaseComponent } from "./base-component.ts";
+import { NavBar } from "./components/nav-bar.ts";
 
-export class BaseScreen {
-  protected getElement(locator: Selector): ChainablePromiseElement {
-    return $(locator);
-  }
+/**
+ * Base class for full screens. Exposes shared components that are visible on
+ * every screen (e.g. the sidebar nav bar).
+ */
+export class BaseScreen extends BaseComponent {
+  readonly navBar = new NavBar();
 }

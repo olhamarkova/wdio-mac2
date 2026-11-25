@@ -38,24 +38,39 @@ app's UI state persists between runs.
 
 ## Page Object Model rules
 
+- **Layout**: `app/base-component.ts` (`BaseComponent`, element helpers) →
+  `app/base-screen.ts` (`BaseScreen extends BaseComponent`, exposes shared
+  components) → `app/screens/<name>-screen.ts` and `app/components/<name>.ts`,
+  each with a sibling `<file>-locators.ts`.
 - **Locators live only in `*-locators.ts` files** — one class per screen or
-  component (`IBooksLocators` in `ibooks-locators.ts`). No selectors in screen
-  methods or specs.
-- **Screens** (`app/<screen>.ts`) extend `BaseScreen`, hold `readonly locators`,
+  component (`SearchScreenLocators` in `search-screen-locators.ts`), one plain
+  property per element. Write only the element type + attributes —
+  `getElement()` in `BaseComponent` adds the `//XCUIElementType` prefix:
+  `searchItem = 'Cell[@label="Search"]';` → `//XCUIElementTypeCell[@label="Search"]`.
+  No selectors in screen methods or specs.
+- **Keep it simple and readable** (juniors maintain this code): plain
+  properties and one clearly named method per action — no generic
+  "open(item)" helpers, lookup maps, `Record` types or locator templates built
+  from parameters.
+- **Screens** (`app/screens/<name>-screen.ts`, class `<Name>Screen`) extend `BaseScreen`, hold `readonly locators`,
   expose private element getters (`this.getElement(this.locators.x)`) and
   public **action** methods (`searchForBooks`) and **verify** methods
   (`verifyNoSuggestionsShown`) that contain the `expect` assertions.
 - **Specs** (`test/e2e/*.spec.ts`) call only public POM methods — no `$()`,
   no selectors, no `browser.*` calls; they read as user steps.
-- **Shared components** — UI present on many screens (the sidebar / nav bar)
-  belongs in `app/components/<name>.ts` + `<name>-locators.ts` and is exposed
-  from `BaseScreen` (e.g. `readonly navBar = new NavBar()`), so every screen
-  can use `this.navBar.open("Library")`. *This is the target structure; the
-  refactor is planned in the roadmap (Phase 1) and not done yet — do it before
-  automating navigation cases, and confirm with the user first.*
-- Locator preference: accessibility id (`~id`) → `-ios predicate string` /
-  `-ios class chain` → short XPath (`//XCUIElementTypeCell[@label="Search"]`).
-  Avoid index-based or long absolute XPaths.
+- **Shared components** — UI present on many screens belongs in
+  `app/components/<name>.ts` + `<name>-locators.ts`, extends `BaseComponent`
+  (never `BaseScreen` — that would be circular) and is exposed from
+  `BaseScreen`. The sidebar is `NavBar`: specs navigate with
+  `screen.navBar.openSearch()`. To add a sidebar item: add a locator property
+  in `NavBarLocators` (e.g. `libraryItem`, confirmed with `npm run inspect` —
+  element types differ between items), a private getter and an
+  `open<Item>()` method in `NavBar`.
+- Screen methods don't navigate to their own screen; the spec does it via
+  `navBar`, so test steps mirror the case steps.
+- Locators are XPaths starting from the element type (the prefix is added
+  for you). Prefer stable attributes: `@identifier` → `@label` / `@title`.
+  Keep them short; avoid indexes (`[2]`) and nested paths.
 
 ## Test rules
 

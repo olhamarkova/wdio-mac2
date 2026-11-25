@@ -66,8 +66,9 @@ explicitly wants automated). Process IDs one at a time.
      `await dumpPageSource("<name>")` (from `tools/page-source.ts`) inside the
      new test after the navigation steps, run that test, read the XML, then
      **remove the call**.
-   - Choose per CLAUDE.md preference: `~identifier` → predicate/class chain →
-     short XPath on element type + `@label`/`@identifier`/`@title`.
+   - Write the locator without the `//XCUIElementType` prefix (`getElement()`
+     adds it): element type + `@identifier` → `@label`/`@title`, e.g.
+     `'Cell[@label="Search"]'`.
 4. **Implement.**
    - Locators → the matching `*-locators.ts` class (create
      `<screen>-locators.ts` for a new screen/component).

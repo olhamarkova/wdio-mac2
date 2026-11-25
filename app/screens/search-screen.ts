@@ -1,18 +1,10 @@
-import { IBooksLocators } from "./ibooks-locators.ts";
-import { BaseScreen } from "./base-screen.ts";
+import { SearchScreenLocators } from "./search-screen-locators.ts";
+import { BaseScreen } from "../base-screen.ts";
 import { expect } from "@wdio/globals";
 import type { ChainablePromiseElement } from "webdriverio";
 
-export class IBooks extends BaseScreen {
-  readonly locators = new IBooksLocators();
-
-  constructor() {
-    super();
-  }
-
-  private searchButton(): ChainablePromiseElement {
-    return this.getElement(this.locators.searchButton);
-  }
+export class SearchScreen extends BaseScreen {
+  readonly locators = new SearchScreenLocators();
 
   private searchField(): ChainablePromiseElement {
     return this.getElement(this.locators.searchField);
@@ -23,7 +15,6 @@ export class IBooks extends BaseScreen {
   }
 
   public async searchForBooks(searchValue: string): Promise<void> {
-    await this.searchButton().click();
     await this.searchField().setValue(searchValue);
   }
 
